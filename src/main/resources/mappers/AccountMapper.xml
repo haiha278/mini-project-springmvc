@@ -1,0 +1,12 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="lg.cns.miniproject.repository.AccountRepository">
+    <resultMap id="AccountResultMap" type="lg.cns.miniproject.entity.Account">
+        <id property="id" column="account_id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="createBy" column="created_by"/>
+        <result property="createTime" column="created_at"/>
+        <result property="updateBy" column="updated_by"/>
+        <result property="updateTime" column="updated_at"/>
+    </resultMap>
+</mapper>
