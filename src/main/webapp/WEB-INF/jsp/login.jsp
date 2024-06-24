@@ -43,8 +43,11 @@
             </div>
             <div id="popup" class="popup">
                 <div class="popup-content">
-                    <span class="close" id="close-popup">&times</span>
+                    <div id="popup-noti"></div>
                     <div id="popup-message"></div>
+                    <div id="close-popup">
+                        Confirm
+                    </div>
                 </div>
             </div>
         </div>
@@ -52,13 +55,15 @@
             Not yet registered?
             <a href="/register">Sign Up</a>
         </div>
-
     </form>
     <c:if test="${not empty message}">
-        <p id="noti" style="display: none">${message}</p>
+        <p id="noti" style="display: none">${noti}</p>
+        <p id="message" style="display: none">${message}</p>
     </c:if>
+
 </div>
 <script src="${pageContext.request.contextPath}/js/login.js">
 </script>
+
 </body>
 </html>

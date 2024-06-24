@@ -1,10 +1,10 @@
 var noti = document.getElementById('noti')
-
+var message = document.getElementById('message')
 
 window.addEventListener("DOMContentLoaded", function () {
-    if(!noti) return;
-    const value = noti.innerText;
-    showPopup(value)
+    if (!message && !message) return;
+    // const value = noti.innerText;
+    showPopup(message.innerText, noti.innerText)
 
 });
 
@@ -14,10 +14,12 @@ document.getElementById("close-popup").addEventListener("click", function () {
 });
 
 
-function showPopup(message) {
+function showPopup(message, noti) {
     var popup = document.getElementById("popup");
     var popupMessage = document.getElementById("popup-message");
+    var popupNoti = document.getElementById("popup-noti");
 
+    popupNoti.innerText = noti
     popupMessage.innerText = message;
     popup.style.display = "block";
 }

@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
@@ -6,37 +7,76 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Register Page</title>
+    <link href="${pageContext.request.contextPath}/css/register.css" rel="stylesheet">
 </head>
 <body>
-<h2>User Registration Form</h2>
-<form action="/register" method="post" modelAttribute="registerDTO">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required><br><br>
-
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required><br><br>
-
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required><br><br>
-
-    <label>Gender:</label><br>
-    <input type="radio" id="male" name="gender" value="male" required>
-    <label for="male">Male</label><br>
-
-    <input type="radio" id="female" name="gender" value="female" required>
-    <label for="female">Female</label><br><br>
-
-    <label for="dob">Date of Birth:</label>
-    <input type="date" id="dob" name="dob" required><br><br>
-
-    <input type="submit" value="Register">
-
-    <c:if test="${not empty errorMessage}">
-        <div class="error-message">
-                ${errorMessage}
+<div class="container" id="login-id">
+    <h1>Login</h1>
+    <!-- login page Html source -->
+    <form id="register-form-id" action="/register" method="post" modelAttribute="registerDTO">
+        <div class="register-form">
+            <div class="input-info">
+                <label class="label" for="username">Username:</label>
+                <input
+                        class="input"
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Username"
+                        required
+                />
+            </div>
+            <div class="input-info">
+                <label class="label" for="password">Password:</label>
+                <input
+                        class="input"
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Password"
+                        required
+                />
+            </div>
+            <div class="input-info">
+                <label class="label" for="confirm-password">Confirm Password:</label>
+                <input
+                        class="input"
+                        type="password"
+                        id="confirm-password"
+                        name="confirmPassword"
+                        placeholder="Confirm Password"
+                        required
+                />
+            </div>
+            <div class="submit">
+                <button type="submit" class="sign-in-button">SIGN UP</button>
+            </div>
+            <div id="popup" class="popup">
+                <div class="popup-content">
+                    <div id="popup-noti"></div>
+                    <div id="popup-message"></div>
+                    <div id="close-popup">
+                        Confirm
+                    </div>
+                </div>
+            </div>
         </div>
+        <div class="redirect-login-link">
+            <a href="/login">
+                <span class="arrow">&lt;</span> LOG IN
+            </a>
+        </div>
+    </form>
+
+    <c:if test="${not empty message}">
+        <p id="noti" style="display: none">${noti}</p>
+        <p id="message" style="display: none">${message}</p>
     </c:if>
-</form>
+
+</div>
+<script src="${pageContext.request.contextPath}/js/login.js">
+</script>
+
 </body>
 </html>

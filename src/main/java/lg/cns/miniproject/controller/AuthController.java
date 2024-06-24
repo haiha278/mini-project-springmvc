@@ -1,6 +1,7 @@
 package lg.cns.miniproject.controller;
 
 import lg.cns.miniproject.dto.LoginDTO;
+import lg.cns.miniproject.dto.RegisterDTO;
 import lg.cns.miniproject.service.account.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,10 +29,26 @@ public class AuthController {
     public String login(@ModelAttribute("loginDTO") LoginDTO loginDTO, Model model) {
         LoginDTO login = accountService.login(loginDTO.getUsername());
         if (login != null && login.getPassword().equals(loginDTO.getPassword())) {
+            model.addAttribute("noti", "Congratulations!");
             model.addAttribute("message", "Login successful.");
         } else {
+            model.addAttribute("noti", "Opps!");
             model.addAttribute("message", "The username or password is incorrect.");
         }
         return "login";
+    }
+
+    @GetMapping("/register")
+    public String showRegisterPage() {
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String register(@ModelAttribute("registerDTO") RegisterDTO registerDTO) {
+        int row_effected = accountService.register(registerDTO);
+        if (row_effected == 1) {
+            return "redirect:/login";
+        }
+        return "register";
     }
 }

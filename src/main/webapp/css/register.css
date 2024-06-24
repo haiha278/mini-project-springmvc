@@ -19,18 +19,18 @@ h1 {
 }
 
 .container {
-    max-width: 500px;
+    max-width: 600px;
     border: 1px solid black;
     margin: auto;
     margin-top: 70px;
     position: relative;
 }
 
-#login-form-id {
+#register-form-id {
     margin-top: 30px;
 }
 
-.login-form {
+.register-form {
     margin-top: 50px;
     display: grid;
     row-gap: 20px;
@@ -79,8 +79,17 @@ label {
 a {
     color: dodgerblue;
     width: fit-content;
-    margin-left: auto;
-    margin-left: 15px;
+    /*margin-left: auto;*/
+    /*margin-left: 15px;*/
+    text-decoration: none;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.arrow {
+    font-size: 50px;
+    margin-right: 5px;
 }
 
 a:hover {
@@ -88,10 +97,10 @@ a:hover {
     font-weight: bold;
 }
 
-.register-link {
+.redirect-login-link {
     text-align: center;
     background-color: gainsboro;
-    padding: 25px;
+    padding: 10px;
 }
 
 .popup {
@@ -127,15 +136,15 @@ a:hover {
     cursor: pointer;
 }
 
-#popup-header{
-margin-top: 5px;
+#popup-header {
+    margin-top: 5px;
 }
 
 #popup-message {
     padding: 5px 20px 35px 20px;
 }
 
-#close-popup{
+#close-popup {
     width: 100%;
     border-top: 2px solid black;
     cursor: pointer;
