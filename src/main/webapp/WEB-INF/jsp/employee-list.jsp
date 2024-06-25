@@ -15,7 +15,7 @@
     <title>Employee Management</title>
 </head>
 <body>
-<form>
+<form action="/employee-list" method="post">
     <div class="filter-box">
         <h1>Employee Management</h1>
 
