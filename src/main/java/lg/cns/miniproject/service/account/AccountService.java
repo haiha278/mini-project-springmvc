@@ -4,7 +4,7 @@ import lg.cns.miniproject.dto.LoginDTO;
 import lg.cns.miniproject.dto.RegisterDTO;
 
 public interface AccountService {
-    LoginDTO login(String username);
+    LoginDTO login(LoginDTO loginDTO);
 
     int register(RegisterDTO registerDTO);
 }

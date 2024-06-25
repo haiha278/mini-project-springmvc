@@ -14,7 +14,7 @@
 <div class="container" id="login-id">
     <h1>Login</h1>
     <!-- login page Html source -->
-    <form id="login-form-id" action="/login" method="post" modelAttribute="loginDTO">
+    <form id="login-form-id" action="<c:url value="/login"/>" method="post" modelAttribute="loginDTO">
         <div class="login-form">
             <div class="input-info">
                 <label class="label" for="username">Username:</label>
@@ -51,6 +51,11 @@
                 </div>
             </div>
         </div>
+
+        <c:if test="${not empty errorMessage}">
+            <div style="color: red">${errorMessage}</div>
+        </c:if>
+
         <div class="register-link">
             Not yet registered?
             <a href="/register">Sign Up</a>
@@ -60,10 +65,10 @@
         <p id="noti" style="display: none">${noti}</p>
         <p id="message" style="display: none">${message}</p>
     </c:if>
-
 </div>
-<script src="${pageContext.request.contextPath}/js/login.js">
-</script>
+
+<script src="${pageContext.request.contextPath}/js/handle_popup.js"></script>
+<script src="${pageContext.request.contextPath}/js/login-page.js"></script>
 
 </body>
 </html>

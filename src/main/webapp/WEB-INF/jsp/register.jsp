@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="container" id="login-id">
-    <h1>Login</h1>
+    <h1>Sign up</h1>
     <!-- login page Html source -->
     <form id="register-form-id" action="/register" method="post" modelAttribute="registerDTO">
         <div class="register-form">
@@ -62,6 +62,11 @@
                 </div>
             </div>
         </div>
+
+        <c:if test="${not empty errorMessage}">
+            <div style="color: red">${errorMessage}</div>
+        </c:if>
+
         <div class="redirect-login-link">
             <a href="/login">
                 <span class="arrow">&lt;</span> LOG IN
@@ -75,8 +80,9 @@
     </c:if>
 
 </div>
-<script src="${pageContext.request.contextPath}/js/login.js">
-</script>
+
+<script src="${pageContext.request.contextPath}/js/handle_popup.js"></script>
+<script src="${pageContext.request.contextPath}/js/login-page.js"></script>
 
 </body>
 </html>

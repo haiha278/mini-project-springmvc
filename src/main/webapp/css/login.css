@@ -127,15 +127,15 @@ a:hover {
     cursor: pointer;
 }
 
-#popup-header{
-margin-top: 5px;
+#popup-header {
+    margin-top: 5px;
 }
 
 #popup-message {
     padding: 5px 20px 35px 20px;
 }
 
-#close-popup{
+#close-popup {
     width: 100%;
     border-top: 2px solid black;
     cursor: pointer;

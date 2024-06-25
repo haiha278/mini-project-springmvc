@@ -2,6 +2,9 @@ package lg.cns.miniproject.controller;
 
 import lg.cns.miniproject.dto.LoginDTO;
 import lg.cns.miniproject.dto.RegisterDTO;
+import lg.cns.miniproject.exception.account.InvalidUsernamePasswordException;
+import lg.cns.miniproject.exception.account.PasswordDoNotMatchException;
+import lg.cns.miniproject.exception.account.UsernameExistedException;
 import lg.cns.miniproject.service.account.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,13 +30,18 @@ public class AuthController {
 
     @PostMapping("/login")
     public String login(@ModelAttribute("loginDTO") LoginDTO loginDTO, Model model) {
-        LoginDTO login = accountService.login(loginDTO.getUsername());
-        if (login != null && login.getPassword().equals(loginDTO.getPassword())) {
-            model.addAttribute("noti", "Congratulations!");
-            model.addAttribute("message", "Login successful.");
-        } else {
-            model.addAttribute("noti", "Opps!");
-            model.addAttribute("message", "The username or password is incorrect.");
+        try {
+            LoginDTO login = accountService.login(loginDTO);
+            if (login != null && login.getPassword().equals(loginDTO.getPassword())) {
+                model.addAttribute("noti", "Congratulations!");
+                model.addAttribute("message", "Login successful.");
+            } else {
+                model.addAttribute("noti", "Opps!");
+                model.addAttribute("message", "The username or password is incorrect.");
+            }
+            return "login";
+        } catch (InvalidUsernamePasswordException invalidUsernamePasswordException) {
+            model.addAttribute("errorMessage", invalidUsernamePasswordException.getMessage());
         }
         return "login";
     }
@@ -44,10 +52,18 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String register(@ModelAttribute("registerDTO") RegisterDTO registerDTO) {
-        int row_effected = accountService.register(registerDTO);
-        if (row_effected == 1) {
-            return "redirect:/login";
+    public String register(@ModelAttribute("registerDTO") RegisterDTO registerDTO, Model model) {
+        try {
+            int row_effected = accountService.register(registerDTO);
+            if (row_effected == 1) {
+                model.addAttribute("noti", "Congratulations!");
+                model.addAttribute("message", "Your account has been succesfully created");
+                return "register";
+            }
+        } catch (UsernameExistedException usernameExistedException) {
+            model.addAttribute("errorMessage", usernameExistedException.getMessage());
+        } catch (PasswordDoNotMatchException passwordDoNotMatchException) {
+            model.addAttribute("errorMessage", passwordDoNotMatchException.getMessage());
         }
         return "register";
     }
