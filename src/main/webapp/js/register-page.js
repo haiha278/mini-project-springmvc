@@ -1,4 +1,3 @@
-
 var noti = document.getElementById('noti')
 var message = document.getElementById('message')
 
@@ -12,6 +11,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
 
 document.getElementById("close-popup").addEventListener("click", function () {
+    console.log("called")
     hidePopup();
     window.location.href = "/login"
 });

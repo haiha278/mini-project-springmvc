@@ -11,5 +11,5 @@ window.addEventListener("DOMContentLoaded", function () {
 
 document.getElementById("close-popup").addEventListener("click", function () {
     hidePopup();
-    window.location.href = "/login"
+    window.location.href = "/employee-list"
 });

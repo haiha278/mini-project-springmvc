@@ -4,17 +4,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8" />
     <meta
             name="viewport"
             content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
     />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <link href="${pageContext.request.contextPath}/css/employee-list.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link href="${pageContext.request.contextPath}/css/employee-list.css" rel="stylesheet" />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
     <title>Employee Management</title>
 </head>
-<body>
 <body>
 <form action="/employee-list" method="post">
     <div class="filter-box">
@@ -39,7 +41,9 @@
                     <select id="project-select" name="projectSelect">
                         <option>--All--</option>
                         <c:forEach items="${projectList}" var="project">
-                            <option value="${project.projectId}">${project.projectName}</option>
+                            <option value="${project.projectId}">
+                                    ${project.projectName}
+                            </option>
                         </c:forEach>
                     </select>
                 </div>
@@ -60,18 +64,18 @@
 
             <div class="select-container">
                 <label class="label" for="start-date-input">Start Date:</label>
-                <input type="date" id="start-date-input"/>
+                <input type="date" id="start-date-input" />
             </div>
 
             <div class="select-container">
                 <label class="label" for="end-date-input">End Date:</label>
-                <input type="date" id="end-date-input"/>
+                <input type="date" id="end-date-input" />
             </div>
         </div>
 
         <div class="search-container">
             <div class="input-for-search">
-                <input type="text" class="input-with-icon" placeholder="Search"/>
+                <input type="text" class="input-with-icon" placeholder="Search" />
             </div>
 
             <div>
@@ -81,51 +85,67 @@
     </div>
 
     <div class="employee-list">
-        <table>
-            <thead>
-            <tr>
-                <th>STT</th>
-                <th>EmpID</th>
-                <th>Name</th>
-                <th>Gender</th>
-                <th>Birthday</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th>Address</th>
-                <th>Team</th>
-                <th>Project</th>
-                <th>Project Leader</th>
-                <th>Start Date</th>
-                <th>Status</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach items="${employeeList}" var="employee" varStatus="status">
+        <div class="total-and-button-to-add-or-delete">
+            <div>
+                <p>*Total:</p>
+            </div>
+            <div>
+                <button>New</button>
+                <button>Delete</button>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
                 <tr>
-                    <td>${status.index + 1}</td>
-                    <td>${employee.employeeId}</td>
-                    <td>${employee.employeeName}</td>
-                    <td>${employee.gender}</td>
-                    <td>${employee.dob}</td>
-                    <td>${employee.phoneNumber}</td>
-                    <td>${employee.email}</td>
-                    <td>${employee.address}</td>
-                    <td>${employee.teamName}</td>
-                    <td>${employee.projectName}</td>
-                    <td>${employee.projectLeaderName}</td>
-                    <td>${employee.startDate}</td>
-                    <td>${employee.status}</td>
-                    <td><!-- Action buttons --></td>
+                    <th>STT</th>
+                    <th>EmpID</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Birthday</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Team</th>
+                    <th>Project</th>
+                    <th>Project Leader</th>
+                    <th>Start Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
                 </tr>
-            </c:forEach>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <c:forEach
+                        items="${employeeList}"
+                        var="employee"
+                        varStatus="status"
+                >
+                    <tr>
+                        <td>${status.index + 1}</td>
+                        <td>${employee.employeeId}</td>
+                        <td>${employee.employeeName}</td>
+                        <td>${employee.gender}</td>
+                        <td>${employee.dob}</td>
+                        <td>${employee.phoneNumber}</td>
+                        <td>${employee.email}</td>
+                        <td>${employee.address}</td>
+                        <td>${employee.teamName}</td>
+                        <td>${employee.projectName}</td>
+                        <td>${employee.projectLeaderName}</td>
+                        <td>${employee.startDate}</td>
+                        <td>${employee.status}</td>
+                        <td><!-- Action buttons --></td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <p id="teamList" style="display: none">${teamList}</p>
     <p id="projectList" style="display: none">${projectList}</p>
 </form>
 </body>
-</body>
 </html>
+
