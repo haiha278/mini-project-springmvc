@@ -1,4 +1,4 @@
-package lg.cns.miniproject.dto;
+package lg.cns.miniproject.dto.auth;
 
 import lombok.Data;
 

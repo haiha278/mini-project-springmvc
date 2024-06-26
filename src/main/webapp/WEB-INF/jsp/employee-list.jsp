@@ -15,39 +15,38 @@
     <title>Employee Management</title>
 </head>
 <body>
+<body>
 <form action="/employee-list" method="post">
     <div class="filter-box">
         <h1>Employee Management</h1>
 
         <div class="filter-input">
             <div class="select-container">
-                <label for="mySelect1" class="select-label">Team:</label>
+                <label for="team-select">Team:</label>
                 <div class="custom-select">
-                    <select id="mySelect1" name="mySelect">
+                    <select id="team-select" name="teamSelect">
                         <option>--All--</option>
-                        <option value="option1">Option 1</option>
-                        <option value="option2">Option 2</option>
-                        <option value="option3">Option 3</option>
-                        <option value="option4">Option 4</option>
+                        <c:forEach items="${teamList}" var="team">
+                            <option value="${team.teamId}">${team.teamName}</option>
+                        </c:forEach>
                     </select>
                 </div>
             </div>
 
             <div class="select-container">
-                <label for="mySelect2" class="select-label">Project:</label>
+                <label for="project-select">Project:</label>
                 <div class="custom-select">
-                    <select id="mySelect2" name="mySelect">
+                    <select id="project-select" name="projectSelect">
                         <option>--All--</option>
-                        <option value="option1">Option 1</option>
-                        <option value="option2">Option 2</option>
-                        <option value="option3">Option 3</option>
-                        <option value="option4">Option 4</option>
+                        <c:forEach items="${projectList}" var="project">
+                            <option value="${project.projectId}">${project.projectName}</option>
+                        </c:forEach>
                     </select>
                 </div>
             </div>
 
             <div class="select-container">
-                <label for="mySelect3" class="select-label">Status:</label>
+                <label for="mySelect3">Status:</label>
                 <div class="custom-select">
                     <select id="mySelect3" name="mySelect">
                         <option>--All--</option>
@@ -80,6 +79,53 @@
             </div>
         </div>
     </div>
+
+    <div class="employee-list">
+        <table>
+            <thead>
+            <tr>
+                <th>STT</th>
+                <th>EmpID</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Birthday</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Team</th>
+                <th>Project</th>
+                <th>Project Leader</th>
+                <th>Start Date</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${employeeList}" var="employee" varStatus="status">
+                <tr>
+                    <td>${status.index + 1}</td>
+                    <td>${employee.employeeId}</td>
+                    <td>${employee.employeeName}</td>
+                    <td>${employee.gender}</td>
+                    <td>${employee.dob}</td>
+                    <td>${employee.phoneNumber}</td>
+                    <td>${employee.email}</td>
+                    <td>${employee.address}</td>
+                    <td>${employee.teamName}</td>
+                    <td>${employee.projectName}</td>
+                    <td>${employee.projectLeaderName}</td>
+                    <td>${employee.startDate}</td>
+                    <td>${employee.status}</td>
+                    <td><!-- Action buttons --></td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
+
+    <p id="teamList" style="display: none">${teamList}</p>
+    <p id="projectList" style="display: none">${projectList}</p>
 </form>
+</body>
 </body>
 </html>

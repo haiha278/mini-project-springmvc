@@ -2,11 +2,8 @@
 var noti = document.getElementById('noti')
 var message = document.getElementById('message')
 
-console.log(message)
-
 window.addEventListener("DOMContentLoaded", function () {
-    if (!message && !message) return;
-    // const value = noti.innerText;
+    if (!noti && !message) return;
     showPopup(message.innerText, noti.innerText)
 
 });

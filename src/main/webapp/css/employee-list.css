@@ -6,12 +6,8 @@
     box-sizing: border-box;
 }
 
-/* .container {
-  max-width: 1200px;
-} */
-
 .filter-box {
-    max-width: 1200px;
+    max-width: 70vw;
     border: 2px solid black;
     margin: auto;
     margin-top: 70px;
@@ -36,11 +32,17 @@ label {
 
 .filter-input {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1.5fr 1.5fr;
-    max-width: 1100px;
-    row-gap: 10px;
+    grid-template-columns: repeat(5, 1fr);
+    max-width: 90%;
+    column-gap: 70px;
     margin: auto;
     margin-top: 50px;
+}
+
+select {
+    width: auto;
+    font-size: 16px;
+    padding: 5px;
 }
 
 .select-container {
@@ -56,12 +58,17 @@ label {
     font-size: 15px;
     border: 1px solid #ccc;
     border-radius: 20px;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-search" viewBox="0 0 16 16"> <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zm-5.84 1.154a5.5 5.5 0 1 1 7.78-7.78 5.5 5.5 0 0 1-7.78 7.78z"/> </svg>')
-    no-repeat;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-search" viewBox="0 0 16 16"> <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zm-5.84 1.154a5.5 5.5 0 1 1 7.78-7.78 5.5 5.5 0 0 1-7.78 7.78z"/> </svg>') no-repeat;
     background-position: 10px center;
 }
+
 .input-with-icon::placeholder {
     font-size: 15px;
+}
+
+input {
+    width: 200px;
+    font-size: 18px;
 }
 
 .search-container {
@@ -80,4 +87,26 @@ label {
     background-color: rgb(100, 193, 255);
     font-size: 15px;
     font-weight: bold;
+}
+
+.employee-list {
+    max-width: 70vw;
+    margin: auto;
+    margin-top: 70px;
+}
+
+table {
+    width: 100%;
+    margin: 20px auto;
+    border-spacing: 0;
+}
+
+th,
+td {
+    border: 1px solid black;
+    padding: 10px 10px;
+}
+
+td {
+    text-align: center;
 }

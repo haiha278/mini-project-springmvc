@@ -1,0 +1,12 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="lg.cns.miniproject.repository.ProjectRepository">
+    <resultMap id="ProjectResultMap" type="lg.cns.miniproject.entity.Project">
+        <id property="projectId" column="project_id"/>
+        <result property="projectName" column="project_name"/>
+        <association property="projectLeader" column="project_leader_id"
+                     resultMap="lg.cns.miniproject.repository.EmployeeRepository.EmployeeResultMap"/>
+        <collection property="employeeList" ofType="Employee"
+                    resultMap="lg.cns.miniproject.repository.EmployeeRepository.EmployeeResultMap"/>
+    </resultMap>
+</mapper>

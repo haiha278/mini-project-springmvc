@@ -1,10 +1,11 @@
 package lg.cns.miniproject.controller;
 
-import lg.cns.miniproject.dto.LoginDTO;
-import lg.cns.miniproject.dto.RegisterDTO;
+import lg.cns.miniproject.dto.auth.LoginDTO;
+import lg.cns.miniproject.dto.auth.RegisterDTO;
 import lg.cns.miniproject.exception.account.InvalidUsernamePasswordException;
 import lg.cns.miniproject.exception.account.PasswordDoNotMatchException;
 import lg.cns.miniproject.exception.account.UsernameExistedException;
+import lg.cns.miniproject.exception.account.UsernameInvalidFormatException;
 import lg.cns.miniproject.service.account.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,7 @@ public class AuthController {
     public String login(@ModelAttribute("loginDTO") LoginDTO loginDTO, Model model) {
         try {
             LoginDTO login = accountService.login(loginDTO);
-            if (login != null && login.getPassword().equals(loginDTO.getPassword())) {
+            if (login != null) {
                 model.addAttribute("noti", "Congratulations!");
                 model.addAttribute("message", "Login successful.");
             } else {
@@ -64,6 +65,8 @@ public class AuthController {
             model.addAttribute("errorMessage", usernameExistedException.getMessage());
         } catch (PasswordDoNotMatchException passwordDoNotMatchException) {
             model.addAttribute("errorMessage", passwordDoNotMatchException.getMessage());
+        } catch (UsernameInvalidFormatException usernameInvalidFormatException) {
+            model.addAttribute("errorMessage", usernameInvalidFormatException.getMessage());
         }
         return "register";
     }
