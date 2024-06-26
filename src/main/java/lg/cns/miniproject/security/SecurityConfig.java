@@ -21,7 +21,6 @@ public class SecurityConfig {
                                 authorizeRequests
                                         .requestMatchers("/", "/login", "/resources/**", "/register", "/WEB-INF/view/**", "/css/**", "/js/**").permitAll()
                                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-//                                .anyRequest().permitAll()
                                         .anyRequest().authenticated()
                 ).csrf(AbstractHttpConfigurer::disable).build();
     }
