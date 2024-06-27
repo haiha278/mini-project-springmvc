@@ -1,6 +1,7 @@
 package lg.cns.miniproject.service.employee;
 
 import lg.cns.miniproject.dto.employee.EmployeeListDTO;
+import lg.cns.miniproject.dto.employee.FilterEmployee;
 import lg.cns.miniproject.entity.Employee;
 import lg.cns.miniproject.entity.Project;
 import lg.cns.miniproject.entity.Team;
@@ -24,6 +25,36 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<EmployeeListDTO> getEmployeeList() {
         List<Employee> employeeList = employeeRepository.findAll();
+        List<EmployeeListDTO> employeeListDTOList = new ArrayList<>();
+        if (employeeList != null && employeeList.size() > 0) {
+            for (Employee employee : employeeList) {
+                EmployeeListDTO employeeListDTO = new EmployeeListDTO();
+                employeeListDTO.setEmployeeId(employee.getEmployeeId());
+                employeeListDTO.setEmployeeName(employee.getEmployeeName());
+                employeeListDTO.setGender(employee.getGender());
+                employeeListDTO.setDob(employee.getDob());
+                employeeListDTO.setPhoneNumber(employee.getPhoneNumber());
+                employeeListDTO.setEmail(employee.getEmail());
+                employeeListDTO.setAddress(employee.getAddress());
+
+                Team team = employee.getTeam();
+                Project project = employee.getProject();
+
+                employeeListDTO.setTeamName(team.getTeamName());
+                employeeListDTO.setProjectName(project.getProjectName());
+                employeeListDTO.setProjectLeaderName(employee.getNameLead());
+
+                employeeListDTO.setStartDate(employee.getStartDate());
+                employeeListDTO.setStatus(employee.getStatus());
+                employeeListDTOList.add(employeeListDTO);
+            }
+        }
+        return employeeListDTOList;
+    }
+
+    @Override
+    public List<EmployeeListDTO> filterEmployeeList(FilterEmployee filterEmployee) {
+        List<Employee> employeeList = employeeRepository.filterEmployeeList(filterEmployee);
         List<EmployeeListDTO> employeeListDTOList = new ArrayList<>();
         if (employeeList != null && employeeList.size() > 0) {
             for (Employee employee : employeeList) {

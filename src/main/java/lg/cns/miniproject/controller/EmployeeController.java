@@ -1,6 +1,7 @@
 package lg.cns.miniproject.controller;
 
 import lg.cns.miniproject.dto.employee.EmployeeListDTO;
+import lg.cns.miniproject.dto.employee.FilterEmployee;
 import lg.cns.miniproject.dto.project.GetAllProjectDTO;
 import lg.cns.miniproject.dto.team.GetAllTeamDTO;
 import lg.cns.miniproject.service.employee.EmployeeService;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
@@ -42,11 +44,15 @@ public class EmployeeController {
     }
 
     @PostMapping("/employee-list")
-    public String filterEmployeeManagementPage(Model model) {
+    public String filterEmployeeManagementPage(Model model, @ModelAttribute("filterEmployee") FilterEmployee filterEmployee) {
         List<GetAllTeamDTO> teamList = teamService.getAllTeam();
         model.addAttribute("teamList", teamList);
+
         List<GetAllProjectDTO> projectList = projectService.getAllProject();
         model.addAttribute("projectList", projectList);
+
+        List<EmployeeListDTO> employeeList = employeeService.filterEmployeeList(filterEmployee);
+        model.addAttribute("employeeList", employeeList);
         return "employee-list";
     }
 }
