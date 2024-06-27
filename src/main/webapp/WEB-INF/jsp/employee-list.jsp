@@ -11,6 +11,7 @@
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <link href="${pageContext.request.contextPath}/css/employee-list.css" rel="stylesheet"/>
+    <link href="${pageContext.request.contextPath}/css/add-employee.css" rel="stylesheet"/>
     <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
@@ -86,10 +87,10 @@
 <div class="employee-list">
     <div class="total-and-button-to-add-or-delete">
         <div>
-            <p>*Total:</p>
+            <p style="color: red">*Total: ${totalEmployee}</p>
         </div>
         <div>
-            <button onclick="adddNewEmployee()">New</button>
+            <button onclick="addNewEmployee()">New</button>
             <button>Delete</button>
         </div>
     </div>
@@ -134,14 +135,17 @@
                     <td>${employee.projectLeaderName}</td>
                     <td>${employee.startDate}</td>
                     <td>${employee.status}</td>
-                    <td><!-- Action buttons --></td>
+                    <td></td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
     </div>
 </div>
-
+<div id="popup" class="popup">
+    <div class="popup-content" id="popup-content">
+    </div>
+</div>
 <p id="teamList" style="display: none">${teamList}</p>
 <p id="projectList" style="display: none">${projectList}</p>
 

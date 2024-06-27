@@ -1,5 +1,6 @@
 package lg.cns.miniproject.controller;
 
+import lg.cns.miniproject.dto.employee.AddEmployeeDTO;
 import lg.cns.miniproject.dto.employee.EmployeeListDTO;
 import lg.cns.miniproject.dto.employee.FilterEmployee;
 import lg.cns.miniproject.dto.project.GetAllProjectDTO;
@@ -40,6 +41,7 @@ public class EmployeeController {
 
         List<EmployeeListDTO> employeeList = employeeService.getEmployeeList();
         model.addAttribute("employeeList", employeeList);
+        model.addAttribute("totalEmployee", employeeList.size());
         return "employee-list";
     }
 
@@ -54,5 +56,11 @@ public class EmployeeController {
         List<EmployeeListDTO> employeeList = employeeService.filterEmployeeList(filterEmployee);
         model.addAttribute("employeeList", employeeList);
         return "employee-list";
+    }
+
+    @PostMapping("/add-employee")
+    public String addEmployee(@ModelAttribute("addEmployeeDTO") AddEmployeeDTO addEmployeeDTO) {
+        int row_effected = employeeService.addEmployee(addEmployeeDTO);
+        return "redirect:/employee-list";
     }
 }

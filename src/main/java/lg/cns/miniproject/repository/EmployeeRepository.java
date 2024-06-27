@@ -22,6 +22,11 @@ public interface EmployeeRepository {
     @ResultMap("EmployeeResultMap")
     List<Employee> filterEmployeeList(FilterEmployee filterEmployee);
 
+    @Insert("INSERT INTO employee (name, gender, birthday, phone, email, address, start_date, status, team_id, project_id) " +
+            "VALUES (#{employeeName}, #{gender}, #{dob}, #{phoneNumber}, #{email}, #{address}, #{startDate}, #{status}, #{team.teamId}, #{project.projectId})")
+    @ResultMap("EmployeeResultMap")
+    int insertEmployee(Employee employee);
+
 //    @Select("SELECT * FROM employee e " +
 //            "WHERE 1=1 " +
 //            "AND (e.name LIKE CONCAT('%', LOWER(#{name}), '%') OR #{name} IS NULL) " +
