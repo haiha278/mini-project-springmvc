@@ -1,5 +1,6 @@
 package lg.cns.miniproject.repository;
 
+import lg.cns.miniproject.dto.employee.EmployeeInfomationDTO;
 import lg.cns.miniproject.dto.employee.FilterEmployee;
 import lg.cns.miniproject.entity.Employee;
 import lg.cns.miniproject.sqlBuilder.EmployeeSqlBuilder;
@@ -26,6 +27,11 @@ public interface EmployeeRepository {
             "VALUES (#{employeeName}, #{gender}, #{dob}, #{phoneNumber}, #{email}, #{address}, #{startDate}, #{status}, #{team.teamId}, #{project.projectId})")
     @ResultMap("EmployeeResultMap")
     int insertEmployee(Employee employee);
+
+    @Select("select e.employee_id, e.name, e.gender, e.birthday, e.phone, e.email, e.address,t.team_id, t.team_name,p.project_id, p.project_name, e.start_date, e.status from employee e left join project p on e.project_id = p.project_id join team t on e.team_id = t.team_id where e.employee_id = #{employeeId}")
+    @ResultMap("EmployeeInformationDTOResultMap")
+    EmployeeInfomationDTO getEmployeeById(long employeeId);
+
 
 //    @Select("SELECT * FROM employee e " +
 //            "WHERE 1=1 " +

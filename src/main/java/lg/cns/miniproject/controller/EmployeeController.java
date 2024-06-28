@@ -5,6 +5,7 @@ import lg.cns.miniproject.dto.employee.EmployeeListDTO;
 import lg.cns.miniproject.dto.employee.FilterEmployee;
 import lg.cns.miniproject.dto.project.GetAllProjectDTO;
 import lg.cns.miniproject.dto.team.GetAllTeamDTO;
+import lg.cns.miniproject.exception.employee.*;
 import lg.cns.miniproject.service.employee.EmployeeService;
 import lg.cns.miniproject.service.project.ProjectService;
 import lg.cns.miniproject.service.team.TeamService;
@@ -59,8 +60,15 @@ public class EmployeeController {
     }
 
     @PostMapping("/add-employee")
-    public String addEmployee(@ModelAttribute("addEmployeeDTO") AddEmployeeDTO addEmployeeDTO) {
-        int row_effected = employeeService.addEmployee(addEmployeeDTO);
-        return "redirect:/employee-list";
+    public String addEmployee(@ModelAttribute("addEmployeeDTO") AddEmployeeDTO addEmployeeDTO, Model model) {
+        try {
+            int row_effected = employeeService.addEmployee(addEmployeeDTO);
+            if (row_effected > 0) {
+                return "redirect:/employee-list?create=true";
+            }
+        } catch (EmailExistException | InvalidDateException | InvalidEmailFormatException | NameFormatInvalidException |
+                 PhoneExistException | PhoneFormatInvalidException e) {
+        }
+        return "redirect:/employee-list?create=false";
     }
 }

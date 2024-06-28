@@ -16,6 +16,8 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          crossorigin="anonymous">
     <title>Employee Management</title>
 </head>
 <body>
@@ -135,7 +137,9 @@
                     <td>${employee.projectLeaderName}</td>
                     <td>${employee.startDate}</td>
                     <td>${employee.status}</td>
-                    <td></td>
+                    <td><i onclick="updateEmployee(${employee.employeeId})" class="fa-regular fa-pen-to-square"
+                           style="cursor: pointer"></i>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -144,12 +148,19 @@
 </div>
 <div id="popup" class="popup">
     <div class="popup-content" id="popup-content">
+        <div id="popup-header">Message</div>
+        <div id="popup-message"></div>
+        <div id="close-popup">
+            Confirm
+        </div>
     </div>
 </div>
-<p id="teamList" style="display: none">${teamList}</p>
-<p id="projectList" style="display: none">${projectList}</p>
+
+<p id="message" style="">${message}</p>
 
 <script src="${pageContext.request.contextPath}/js/employee-list.js"></script>
+<script src="${pageContext.request.contextPath}/js/add-employee.js"></script>
+<script src="${pageContext.request.contextPath}/js/update-employee.js"></script>
 </body>
 </html>
 

@@ -91,7 +91,8 @@ input:checked + .slider:before {
 .left-input-info div:not(.status-input) {
     display: grid;
     grid-template-columns: auto auto;
-    justify-content: space-between;
+    column-gap: 20px;
+    justify-content: flex-start;
 }
 
 .status-input {
@@ -111,5 +112,12 @@ input:checked + .slider:before {
 .right-input-info div {
     display: grid;
     grid-template-columns: auto auto;
-    justify-content: space-between;
+    column-gap: 20px;
+    justify-content: flex-start;
+}
+
+.submit{
+    padding: 5px;
+    width: 100px;
+    cursor: pointer;
 }

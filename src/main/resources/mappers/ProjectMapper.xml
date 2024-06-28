@@ -10,3 +10,6 @@
                     resultMap="lg.cns.miniproject.repository.EmployeeRepository.EmployeeResultMap"/>
     </resultMap>
 </mapper>
+
+
+
