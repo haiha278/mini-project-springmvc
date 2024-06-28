@@ -1,9 +1,6 @@
 package lg.cns.miniproject.service.employee;
 
-import lg.cns.miniproject.dto.employee.AddEmployeeDTO;
-import lg.cns.miniproject.dto.employee.EmployeeInfomationDTO;
-import lg.cns.miniproject.dto.employee.EmployeeListDTO;
-import lg.cns.miniproject.dto.employee.FilterEmployee;
+import lg.cns.miniproject.dto.employee.*;
 import lg.cns.miniproject.entity.Employee;
 
 import java.util.List;
@@ -16,4 +13,6 @@ public interface EmployeeService {
     int addEmployee(AddEmployeeDTO addEmployeeDTO);
 
     EmployeeInfomationDTO getEmployeeById(long employeeId);
+
+    int updateEmployee(UpdateEmployeeDTO updateEmployeeDTO);
 }

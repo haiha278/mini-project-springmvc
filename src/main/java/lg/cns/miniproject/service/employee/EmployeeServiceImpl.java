@@ -1,9 +1,6 @@
 package lg.cns.miniproject.service.employee;
 
-import lg.cns.miniproject.dto.employee.AddEmployeeDTO;
-import lg.cns.miniproject.dto.employee.EmployeeInfomationDTO;
-import lg.cns.miniproject.dto.employee.EmployeeListDTO;
-import lg.cns.miniproject.dto.employee.FilterEmployee;
+import lg.cns.miniproject.dto.employee.*;
 import lg.cns.miniproject.entity.Employee;
 import lg.cns.miniproject.entity.Project;
 import lg.cns.miniproject.entity.Team;
@@ -99,7 +96,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (!validation.validatePhoneFormat(addEmployeeDTO.getPhoneNumber())) {
             throw new PhoneFormatInvalidException("Phone is invalid");
         }
-        if (validation.checkPhoneExist(addEmployeeDTO.getPhoneNumber(), getEmployeeList())) {
+        if (validation.checkPhoneExistForAddEmployee(addEmployeeDTO.getPhoneNumber(), getEmployeeList())) {
             throw new PhoneExistException("Phone Number is existed");
         }
         if (validation.validateStartDate(addEmployeeDTO.getStartDate())) {
@@ -111,7 +108,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (!validation.validateEmailFormat(addEmployeeDTO.getEmail())) {
             throw new InvalidEmailFormatException("Invalid Email Format");
         }
-        if (validation.checkEmailExist(addEmployeeDTO.getEmail(), getEmployeeList())) {
+        if (validation.checkEmailExistForAddEmployee(addEmployeeDTO.getEmail(), getEmployeeList())) {
             throw new EmailExistException("Email is existed");
         }
 
@@ -136,5 +133,43 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeInfomationDTO getEmployeeById(long employeeId) {
         EmployeeInfomationDTO employee = employeeRepository.getEmployeeById(employeeId);
         return employee;
+    }
+
+    @Override
+    public int updateEmployee(UpdateEmployeeDTO updateEmployeeDTO) {
+        List<EmployeeInfomationDTO> employeeList = employeeRepository.getAllEmployeeExceptById(updateEmployeeDTO.getEmployeeId());
+
+        if (!validation.validateNameFormat(updateEmployeeDTO.getName())) {
+            throw new NameFormatInvalidException("Name is invalid");
+        }
+        if (!validation.validatePhoneFormat(updateEmployeeDTO.getPhoneNumber())) {
+            throw new PhoneFormatInvalidException("Phone is invalid");
+        }
+        if (validation.checkPhoneExistForUpdateEmployee(updateEmployeeDTO.getPhoneNumber(), employeeList)) {
+            throw new PhoneExistException("Phone Number is existed");
+        }
+        if (validation.validateStartDate(updateEmployeeDTO.getStartDate())) {
+            throw new InvalidDateException("Invalid Date");
+        }
+        if (validation.validateBirthday(updateEmployeeDTO.getDob())) {
+            throw new InvalidDateException("Invalid Date");
+        }
+        if (!validation.validateEmailFormat(updateEmployeeDTO.getEmail())) {
+            throw new InvalidEmailFormatException("Invalid Email Format");
+        }
+        if (validation.checkEmailExistForUpdateEmployee(updateEmployeeDTO.getEmail(), employeeList)) {
+            throw new EmailExistException("Email is existed");
+        }
+
+        EmployeeInfomationDTO employeeInfomationDTO = (EmployeeInfomationDTO) mapper.mapToEntity(updateEmployeeDTO, EmployeeInfomationDTO.class);
+        employeeInfomationDTO.setProjectId(updateEmployeeDTO.getProjectSelect());
+        employeeInfomationDTO.setTeamId(updateEmployeeDTO.getTeamSelect());
+        if (updateEmployeeDTO.getStatus() != null) {
+            employeeInfomationDTO.setStatus(updateEmployeeDTO.getStatus() ? "Active" : "Inactive");
+        } else {
+            employeeInfomationDTO.setStatus("Inactive");
+        }
+        int row_effected = employeeRepository.updateEmployee(employeeInfomationDTO);
+        return row_effected;
     }
 }

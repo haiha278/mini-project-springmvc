@@ -33,15 +33,22 @@ public interface EmployeeRepository {
     EmployeeInfomationDTO getEmployeeById(long employeeId);
 
 
-//    @Select("SELECT * FROM employee e " +
-//            "WHERE 1=1 " +
-//            "AND (e.name LIKE CONCAT('%', LOWER(#{name}), '%') OR #{name} IS NULL) " +
-//            "AND (e.team LIKE CONCAT('%', LOWER(#{team}), '%') OR #{team} IS NULL) " +
-//            "AND (e.phone LIKE CONCAT('%', LOWER(#{phone}), '%') OR #{phone} IS NULL) " +
-//            "AND (e.gender = LOWER(#{gender}) OR #{gender} IS NULL) " +
-//            "AND (e.birth_date >= #{fromDate} OR #{fromDate} IS NULL) " +
-//            "AND (e.birth_date <= #{toDate} OR #{toDate} IS NULL)")
-//    List<Employee> findEmployeesByFilters(@Param("name") String name, @Param("team") String team,
-//                                          @Param("phone") String phone, @Param("gender") String gender,
-//                                          @Param("fromDate") LocalDate fromDate, @Param("toDate") LocalDate toDate);
+    @Update("UPDATE employee SET " +
+            "name = #{employeeName}, " +
+            "gender = #{gender}, " +
+            "birthday = #{dob}, " +
+            "phone = #{phoneNumber}, " +
+            "email = #{email}, " +
+            "address = #{address}, " +
+            "start_date = #{startDate}, " +
+            "status = #{status}, " +
+            "team_id = #{teamId}, " +
+            "project_id = #{projectId} " +
+            "WHERE employee_id = #{employeeId}")
+    int updateEmployee(EmployeeInfomationDTO employeeInfomationDTO);
+
+    @Select("select * from employee where employee_id != #{employeeId}")
+    @ResultMap("EmployeeInformationDTOResultMap")
+    List<EmployeeInfomationDTO> getAllEmployeeExceptById(long employeeId);
+
 }

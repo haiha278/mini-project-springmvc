@@ -7,7 +7,6 @@ function fetchTeams() {
             data.data.forEach(team => {
                 optionsHTML += `<option value="${team.teamId}">${team.teamName}</option>`;
             });
-            console.log("optionsHTML :", optionsHTML)
             teamSelect.innerHTML = optionsHTML;
         })
         .catch(error => {
@@ -43,7 +42,6 @@ const getEmployee = async (params) => {
         });
 
         const data = (await response.json()).data;
-        console.log("data :", data)
         if (data) {
             return data;
         }
@@ -53,15 +51,15 @@ const getEmployee = async (params) => {
 };
 
 async function updateEmployee(empId) {
-    console.log(empId)
     const data = await  getEmployee(empId);
     var popupContent = document.getElementById("popup-content");
     var popup = document.getElementById("popup");
-    console.log("data :" , data)
+
     popupContent.innerHTML = `<form action="/update-employee" method="post" modelAttribute="updateEmployeeDTO">
     <div class="container">
         <h2>Employee Information</h2>
         <div class="input-info">
+            <input type="hidden" name="employeeId" value="${data.employeeId}">
             <div class="left-input-info">
                 <div>
                     <label class="label" for="name">Name:</label>
@@ -94,7 +92,7 @@ async function updateEmployee(empId) {
 
                     <div>
                         <label class="switch">
-                            <input type="checkbox" id="status" name="status" ${data.status === 'Active' ? 'checked' : ''} />
+                            <input type="checkbox" id="status" name="status" ${data.status == 'Active' ? 'checked' : ''} />
                             <span class="slider round"></span>
                         </label>
                     </div>

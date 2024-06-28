@@ -1,5 +1,6 @@
 package lg.cns.miniproject.utils;
 
+import lg.cns.miniproject.dto.employee.EmployeeInfomationDTO;
 import lg.cns.miniproject.dto.employee.EmployeeListDTO;
 import org.springframework.stereotype.Component;
 
@@ -40,18 +41,38 @@ public class Validation {
         return email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
     }
 
-    public boolean checkPhoneExist(String phone, List<EmployeeListDTO> employeeList) {
-        for (EmployeeListDTO employeeListDTO : employeeList) {
-            employeeListDTO.getPhoneNumber().equals(phone);
-            return true;
+    public boolean checkPhoneExistForUpdateEmployee(String phone, List<EmployeeInfomationDTO> employeeList) {
+        for (EmployeeInfomationDTO employeeInfomationDTO : employeeList) {
+            if (employeeInfomationDTO.getPhoneNumber().equals(phone)) {
+                return true;
+            }
         }
         return false;
     }
 
-    public boolean checkEmailExist(String email, List<EmployeeListDTO> employeeList) {
+    public boolean checkPhoneExistForAddEmployee(String phone, List<EmployeeListDTO> employeeList) {
         for (EmployeeListDTO employeeListDTO : employeeList) {
-            employeeListDTO.getEmail().equals(email);
-            return true;
+            if (employeeListDTO.getPhoneNumber().equals(phone)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkEmailExistForUpdateEmployee(String email, List<EmployeeInfomationDTO> employeeList) {
+        for (EmployeeInfomationDTO employeeInfomationDTO : employeeList) {
+            if (employeeInfomationDTO.getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkEmailExistForAddEmployee(String email, List<EmployeeListDTO> employeeList) {
+        for (EmployeeListDTO employeeListDTO : employeeList) {
+            if (employeeListDTO.getEmail().equals(email)) {
+                return true;
+            }
         }
         return false;
     }
