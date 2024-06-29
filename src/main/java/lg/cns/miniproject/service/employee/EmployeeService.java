@@ -2,6 +2,7 @@ package lg.cns.miniproject.service.employee;
 
 import lg.cns.miniproject.dto.employee.*;
 import lg.cns.miniproject.entity.Employee;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface EmployeeService {
     EmployeeInfomationDTO getEmployeeById(long employeeId);
 
     int updateEmployee(UpdateEmployeeDTO updateEmployeeDTO);
+
+    int deleteEmployee(List<Long> employeeIds);
 }

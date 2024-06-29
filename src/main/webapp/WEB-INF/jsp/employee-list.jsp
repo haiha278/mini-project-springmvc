@@ -93,7 +93,9 @@
         </div>
         <div>
             <button onclick="addNewEmployee()">New</button>
-            <button>Delete</button>
+            <form id="deleteEmployee" action="/delete-employee" method="post">
+                <button type="submit">Delete</button>
+            </form>
         </div>
     </div>
 
@@ -101,6 +103,7 @@
         <table>
             <thead>
             <tr>
+                <th></th>
                 <th>STT</th>
                 <th>EmpID</th>
                 <th>Name</th>
@@ -118,12 +121,13 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach
-                    items="${employeeList}"
-                    var="employee"
-                    varStatus="status"
-            >
+            <c:forEach items="${employeeList}" var="employee" varStatus="status">
                 <tr>
+                    <td><input class="input-checkbox" type="checkbox" name="employeeIds"
+                               value="${employee.employeeId}" id="" form="deleteEmployee"
+                               style="cursor: pointer"
+                               onchange="toggleRowBackground(this)">
+                    </td>
                     <td>${status.index + 1}</td>
                     <td>${employee.employeeId}</td>
                     <td>${employee.employeeName}</td>
@@ -146,6 +150,7 @@
         </table>
     </div>
 </div>
+
 <div id="popup" class="popup">
     <div class="popup-content" id="popup-content">
         <div id="popup-header">Message</div>

@@ -172,4 +172,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         int row_effected = employeeRepository.updateEmployee(employeeInfomationDTO);
         return row_effected;
     }
+
+    @Override
+    public int deleteEmployee(List<Long> employeeIds) {
+        int row_effected = employeeRepository.deleteEmployees(employeeIds);
+        return row_effected;
+    }
 }

@@ -37,3 +37,13 @@ document.getElementById("close-popup").addEventListener("click", function () {
     hidePopup();
     window.location.href = "/employee-list"
 });
+
+
+function toggleRowBackground(checkbox) {
+    const row = checkbox.closest('tr');
+    if (checkbox.checked) {
+        row.classList.add('selected');
+    } else {
+        row.classList.remove('selected');
+    }
+}

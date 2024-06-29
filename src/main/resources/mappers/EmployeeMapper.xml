@@ -38,4 +38,11 @@
         <result property="projectId" column="project_id"/>
         <result property="projectName" column="project_name"/>
     </resultMap>
+
+    <delete id="deleteEmployees" parameterType="java.util.List">
+        DELETE FROM employee WHERE employee_id IN
+        <foreach item="id" index="index" collection="employeeIds" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

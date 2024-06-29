@@ -6,6 +6,10 @@
     box-sizing: border-box;
 }
 
+#deleteEmployee{
+    display: inline-block;
+}
+
 .filter-box {
     max-width: 70vw;
     border: 2px solid black;
@@ -111,6 +115,10 @@ td {
     text-align: center;
 }
 
+.input-checkbox {
+    width: fit-content;
+}
+
 .total-and-button-to-add-or-delete {
     display: flex;
     justify-content: space-between;
@@ -168,4 +176,6 @@ td {
     padding: 10px;
 }
 
-
+tr.selected {
+    background-color: #d1e8ff;
+}

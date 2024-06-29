@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -85,5 +86,15 @@ public class EmployeeController {
 
         }
         return "redirect:/employee-list?update=false";
+    }
+
+    @PostMapping("/delete-employee")
+    public String deleteEmployee(@RequestParam List<Long> employeeIds) {
+        System.out.println("Employee IDs to delete: " + employeeIds);
+        int row_effected = employeeService.deleteEmployee(employeeIds);
+        if (row_effected > 0) {
+            return "redirect:/employee-list?delete=true";
+        }
+        return "redirect:/employee-list?delete=false";
     }
 }

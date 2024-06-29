@@ -51,4 +51,6 @@ public interface EmployeeRepository {
     @ResultMap("EmployeeInformationDTOResultMap")
     List<EmployeeInfomationDTO> getAllEmployeeExceptById(long employeeId);
 
+    int deleteEmployees(@Param("employeeIds") List<Long> employeeIds);
+
 }
