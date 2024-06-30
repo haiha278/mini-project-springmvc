@@ -6,14 +6,18 @@
     box-sizing: border-box;
 }
 
-#deleteEmployee{
+#deleteEmployee {
     display: inline-block;
 }
 
-.filter-box {
-    max-width: 70vw;
-    border: 2px solid black;
+.container {
+    width: fit-content;
     margin: auto;
+}
+
+.filter-box {
+    max-width: fit-content;
+    border: 2px solid black;
     margin-top: 70px;
     position: relative;
 }
@@ -94,7 +98,7 @@ input {
 }
 
 .employee-list {
-    max-width: 70vw;
+    max-width: 100%;
     margin: auto;
     margin-top: 70px;
 }
@@ -178,4 +182,38 @@ td {
 
 tr.selected {
     background-color: #d1e8ff;
+}
+
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+    position: relative;
+    width: 100%;
+}
+
+.pagination select {
+    position: absolute;
+    left: 0px;
+    top: 50%;
+    transform: translateY(-45%);
+}
+
+.pagination button {
+    text-decoration: none;
+    border: 1px solid black;
+    padding: 3px 10px;
+    background-color: #cccccc;
+    text-align: center;
+    color: black;
+    cursor: pointer;
+}
+
+.page-list {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.page-list a.active{
+    background-color: #caeaff;
 }

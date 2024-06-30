@@ -1,5 +1,6 @@
 package lg.cns.miniproject.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lg.cns.miniproject.dto.employee.AddEmployeeDTO;
 import lg.cns.miniproject.dto.employee.EmployeeListDTO;
 import lg.cns.miniproject.dto.employee.FilterEmployee;
@@ -35,34 +36,64 @@ public class EmployeeController {
     }
 
     @GetMapping("/employee-list")
-    public String showEmployeeManagementPage(Model model) {
+    public String showEmployeeManagementPage(HttpSession session, Model model, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int size) {
         List<GetAllTeamDTO> teamList = teamService.getAllTeam();
         model.addAttribute("teamList", teamList);
 
         List<GetAllProjectDTO> projectList = projectService.getAllProject();
         model.addAttribute("projectList", projectList);
 
-        List<EmployeeListDTO> employeeList = employeeService.getEmployeeList();
-        model.addAttribute("employeeList", employeeList);
-        model.addAttribute("totalEmployee", employeeList.size());
+        FilterEmployee filterEmployee = (FilterEmployee) session.getAttribute("filterEmployee");
+
+        if (filterEmployee != null) {
+            List<EmployeeListDTO> employeeList = employeeService.filterEmployeeList(filterEmployee, page, size);
+            int totalRecords = employeeService.countFilteredEmployees(filterEmployee);
+            int totalPages = (int) Math.ceil((double) totalRecords / size);
+            model.addAttribute("totalEmployee", totalRecords);
+            model.addAttribute("totalPages", totalPages);
+            model.addAttribute("employeeList", employeeList);
+            model.addAttribute("totalEmployee", totalRecords);
+        } else {
+            List<EmployeeListDTO> employeeList = employeeService.getEmployeeListByPaging(page, size);
+            int totalRecords = employeeService.countAllEmployees();
+            int totalPages = (int) Math.ceil((double) totalRecords / size);
+            model.addAttribute("totalPages", totalPages);
+            model.addAttribute("employeeList", employeeList);
+            model.addAttribute("totalEmployee", totalRecords);
+            model.addAttribute("totalEmployee", totalRecords);
+        }
+
+        model.addAttribute("currentPage", page);
+        model.addAttribute("size", size);
         return "employee-list";
     }
 
     @PostMapping("/employee-list")
-    public String filterEmployeeManagementPage(Model model, @ModelAttribute("filterEmployee") FilterEmployee filterEmployee) {
+    public String filterEmployeeManagementPage(HttpSession session, Model model, @ModelAttribute("filterEmployee") FilterEmployee filterEmployee,
+                                               @RequestParam(defaultValue = "1") int page,
+                                               @RequestParam(defaultValue = "5") int size) {
         List<GetAllTeamDTO> teamList = teamService.getAllTeam();
         model.addAttribute("teamList", teamList);
 
         List<GetAllProjectDTO> projectList = projectService.getAllProject();
         model.addAttribute("projectList", projectList);
 
-        List<EmployeeListDTO> employeeList = employeeService.filterEmployeeList(filterEmployee);
+        List<EmployeeListDTO> employeeList = employeeService.filterEmployeeList(filterEmployee, page, size);
         model.addAttribute("employeeList", employeeList);
+
+        session.setAttribute("filterEmployee", filterEmployee);
+
+        int totalRecords = employeeService.countFilteredEmployees(filterEmployee);
+        int totalPages = (int) Math.ceil((double) totalRecords / size);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalEmployee", totalRecords);
+        model.addAttribute("size", size);
         return "employee-list";
     }
 
     @PostMapping("/add-employee")
-    public String addEmployee(@ModelAttribute("addEmployeeDTO") AddEmployeeDTO addEmployeeDTO, Model model) {
+    public String addEmployee(@ModelAttribute("addEmployeeDTO") AddEmployeeDTO addEmployeeDTO) {
         try {
             int row_effected = employeeService.addEmployee(addEmployeeDTO);
             if (row_effected > 0) {

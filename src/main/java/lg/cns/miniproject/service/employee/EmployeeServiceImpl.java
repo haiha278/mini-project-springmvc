@@ -42,12 +42,13 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employeeListDTO.setPhoneNumber(employee.getPhoneNumber());
                 employeeListDTO.setEmail(employee.getEmail());
                 employeeListDTO.setAddress(employee.getAddress());
+//                employeeListDTO = (EmployeeListDTO) mapper.mapToDTO(employee, EmployeeListDTO.class);
 
                 Team team = employee.getTeam();
                 Project project = employee.getProject();
 
-                employeeListDTO.setTeamName(team.getTeamName());
-                employeeListDTO.setProjectName(project.getProjectName());
+                employeeListDTO.setTeamName(team != null ? team.getTeamName() : "");
+                employeeListDTO.setProjectName(project != null ? project.getProjectName() : "");
                 employeeListDTO.setProjectLeaderName(employee.getNameLead());
 
                 employeeListDTO.setStartDate(employee.getStartDate());
@@ -59,8 +60,44 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeListDTO> filterEmployeeList(FilterEmployee filterEmployee) {
-        List<Employee> employeeList = employeeRepository.filterEmployeeList(filterEmployee);
+    public List<EmployeeListDTO> getEmployeeListByPaging(int page, int size) {
+        int offset = (page - 1) * size;
+
+        List<Employee> employeeList = employeeRepository.getEmployeeListByPaging(offset, size);
+
+        List<EmployeeListDTO> employeeListDTOList = new ArrayList<>();
+        if (employeeList != null && employeeList.size() > 0) {
+            for (Employee employee : employeeList) {
+                EmployeeListDTO employeeListDTO = new EmployeeListDTO();
+                employeeListDTO.setEmployeeId(employee.getEmployeeId());
+                employeeListDTO.setEmployeeName(employee.getEmployeeName());
+                employeeListDTO.setGender(employee.getGender());
+                employeeListDTO.setDob(employee.getDob());
+                employeeListDTO.setPhoneNumber(employee.getPhoneNumber());
+                employeeListDTO.setEmail(employee.getEmail());
+                employeeListDTO.setAddress(employee.getAddress());
+//                employeeListDTO = (EmployeeListDTO) mapper.mapToDTO(employee, EmployeeListDTO.class);
+
+                Team team = employee.getTeam();
+                Project project = employee.getProject();
+
+                employeeListDTO.setTeamName(team != null ? team.getTeamName() : "");
+                employeeListDTO.setProjectName(project != null ? project.getProjectName() : "");
+                employeeListDTO.setProjectLeaderName(employee.getNameLead());
+
+                employeeListDTO.setStartDate(employee.getStartDate());
+                employeeListDTO.setStatus(employee.getStatus());
+                employeeListDTOList.add(employeeListDTO);
+            }
+        }
+        return employeeListDTOList;
+    }
+
+    @Override
+    public List<EmployeeListDTO> filterEmployeeList(FilterEmployee filterEmployee, int page, int size) {
+        int offset = (page - 1) * size;
+
+        List<Employee> employeeList = employeeRepository.filterEmployeeList(filterEmployee, offset, size);
         List<EmployeeListDTO> employeeListDTOList = new ArrayList<>();
         if (employeeList != null && employeeList.size() > 0) {
             for (Employee employee : employeeList) {
@@ -177,5 +214,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     public int deleteEmployee(List<Long> employeeIds) {
         int row_effected = employeeRepository.deleteEmployees(employeeIds);
         return row_effected;
+    }
+
+    @Override
+    public int countAllEmployees() {
+        return employeeRepository.countAll();
+    }
+
+    @Override
+    public int countFilteredEmployees(FilterEmployee filterEmployee) {
+        return employeeRepository.countFilteredEmployees(filterEmployee);
     }
 }

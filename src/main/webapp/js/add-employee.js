@@ -26,7 +26,7 @@ function addNewEmployee() {
                     <label for="team-select2">Team:</label>
                     <div>
                         <select id="team-select-for-popup" name="teamSelect">
-                            <option>--All--</option>
+                            <option value="">--All--</option>
                         </select>
                     </div>
                 </div>
@@ -68,7 +68,7 @@ function addNewEmployee() {
                     <label for="project-select-for-popup">Project:</label>
                     <div>
                         <select id="project-select-for-popup" name="projectSelect">
-                            <option>--All--</option>
+                            <option value="">--All--</option>
                         </select>
                     </div>
                 </div>
@@ -104,7 +104,7 @@ function fetchTeamsForAddEmployee() {
         .then(response => response.json())
         .then(data => {
             const teamSelect = document.getElementById('team-select-for-popup');
-            let optionsHTML = '<option>--All--</option>';
+            let optionsHTML = '<option value="">--All--</option>';
             data.data.forEach(team => {
                 optionsHTML += `<option value="${team.teamId}">${team.teamName}</option>`;
             });
@@ -120,7 +120,7 @@ function fetchProjectsAddEmployee() {
         .then(response => response.json())
         .then(data => {
             const projectSelect = document.getElementById('project-select-for-popup');
-            let optionsHTML = '<option>--All--</option>'
+            let optionsHTML = '<option value="">--All--</option>'
             data.data.forEach(project => {
                 optionsHTML += `<option value="${project.projectId}">${project.projectName}</option>`;
             });

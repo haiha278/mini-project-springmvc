@@ -13,15 +13,30 @@ import java.util.List;
 @Mapper
 public interface EmployeeRepository {
 
-    @Select("select e.employee_id, e.name, e.gender, e.birthday, e.phone, e.email, e.address, t.team_name, p.project_name, e2.name as nameLead, e.start_date, e.status " +
-            "from employee e left join project p on e.project_id = p.project_id " +
-            "join employee e2 on p.project_leader_id = e2.employee_id join team t on e.team_id = t.team_id")
+    @Select("SELECT e.employee_id, e.name, e.gender, e.birthday, e.phone, e.email, e.address, t.team_name, p.project_name, e2.name as nameLead, e.start_date, e.status \n" +
+            "FROM employee e \n" +
+            "LEFT JOIN project p ON e.project_id = p.project_id \n" +
+            "LEFT JOIN employee e2 ON p.project_leader_id = e2.employee_id \n" +
+            "LEFT JOIN team t ON e.team_id = t.team_id\n" +
+            "ORDER BY e.employee_id \n" +
+            "LIMIT #{limit} OFFSET #{offset};")
+    @ResultMap("EmployeeResultMap")
+    List<Employee> getEmployeeListByPaging(@Param("offset") int offset, @Param("limit") int limit);
+
+    @Select("SELECT e.employee_id, e.name, e.gender, e.birthday, e.phone, e.email, e.address, t.team_name, p.project_name, e2.name as nameLead, e.start_date, e.status \n" +
+            "FROM employee e \n" +
+            "LEFT JOIN project p ON e.project_id = p.project_id \n" +
+            "LEFT JOIN employee e2 ON p.project_leader_id = e2.employee_id \n" +
+            "LEFT JOIN team t ON e.team_id = t.team_id;")
     @ResultMap("EmployeeResultMap")
     List<Employee> findAll();
 
     @SelectProvider(type = EmployeeSqlBuilder.class, method = "builderFilterEmployeeQuery")
     @ResultMap("EmployeeResultMap")
-    List<Employee> filterEmployeeList(FilterEmployee filterEmployee);
+    List<Employee> filterEmployeeList(@Param("filterEmployee") FilterEmployee filterEmployee, @Param("offset") int offset, @Param("limit") int limit);
+
+    @SelectProvider(type = EmployeeSqlBuilder.class, method = "countFilteredEmployees")
+    int countFilteredEmployees(FilterEmployee filterEmployee);
 
     @Insert("INSERT INTO employee (name, gender, birthday, phone, email, address, start_date, status, team_id, project_id) " +
             "VALUES (#{employeeName}, #{gender}, #{dob}, #{phoneNumber}, #{email}, #{address}, #{startDate}, #{status}, #{team.teamId}, #{project.projectId})")
@@ -53,4 +68,6 @@ public interface EmployeeRepository {
 
     int deleteEmployees(@Param("employeeIds") List<Long> employeeIds);
 
+    @Select("SELECT COUNT(*) FROM employee")
+    int countAll();
 }
