@@ -1,7 +1,10 @@
 package lg.cns.miniproject.utils;
 
+import lg.cns.miniproject.dto.employee.AddEmployeeDTO;
 import lg.cns.miniproject.dto.employee.EmployeeInfomationDTO;
 import lg.cns.miniproject.dto.employee.EmployeeListDTO;
+import lg.cns.miniproject.dto.employee.UpdateEmployeeDTO;
+import lg.cns.miniproject.exception.employee.*;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -75,5 +78,53 @@ public class Validation {
             }
         }
         return false;
+    }
+
+    public void validateDataForAddEmployee(AddEmployeeDTO addEmployeeDTO, List<EmployeeListDTO> employeeList) {
+        if (!validateNameFormat(addEmployeeDTO.getName())) {
+            throw new NameFormatInvalidException("Name is invalid");
+        }
+        if (!validatePhoneFormat(addEmployeeDTO.getPhoneNumber())) {
+            throw new PhoneFormatInvalidException("Phone is invalid");
+        }
+        if (checkPhoneExistForAddEmployee(addEmployeeDTO.getPhoneNumber(), employeeList)) {
+            throw new PhoneExistException("Phone Number is existed");
+        }
+        if (validateStartDate(addEmployeeDTO.getStartDate())) {
+            throw new InvalidDateException("Invalid Date");
+        }
+        if (validateBirthday(addEmployeeDTO.getDob())) {
+            throw new InvalidDateException("Invalid Date");
+        }
+        if (!validateEmailFormat(addEmployeeDTO.getEmail())) {
+            throw new InvalidEmailFormatException("Invalid Email Format");
+        }
+        if (checkEmailExistForAddEmployee(addEmployeeDTO.getEmail(), employeeList)) {
+            throw new EmailExistException("Email is existed");
+        }
+    }
+
+    public void validateDataForUpdateEmployee(UpdateEmployeeDTO updateEmployeeDTO, List<EmployeeInfomationDTO> employeeList) {
+        if (!validateNameFormat(updateEmployeeDTO.getName())) {
+            throw new NameFormatInvalidException("Name is invalid");
+        }
+        if (!validatePhoneFormat(updateEmployeeDTO.getPhoneNumber())) {
+            throw new PhoneFormatInvalidException("Phone is invalid");
+        }
+        if (checkPhoneExistForUpdateEmployee(updateEmployeeDTO.getPhoneNumber(), employeeList)) {
+            throw new PhoneExistException("Phone Number is existed");
+        }
+        if (validateStartDate(updateEmployeeDTO.getStartDate())) {
+            throw new InvalidDateException("Invalid Date");
+        }
+        if (validateBirthday(updateEmployeeDTO.getDob())) {
+            throw new InvalidDateException("Invalid Date");
+        }
+        if (!validateEmailFormat(updateEmployeeDTO.getEmail())) {
+            throw new InvalidEmailFormatException("Invalid Email Format");
+        }
+        if (checkEmailExistForUpdateEmployee(updateEmployeeDTO.getEmail(), employeeList)) {
+            throw new EmailExistException("Email is existed");
+        }
     }
 }

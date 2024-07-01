@@ -142,7 +142,7 @@
                         <td>${employee.address}</td>
                         <td>${employee.teamName}</td>
                         <td>${employee.projectName}</td>
-                        <td>${employee.projectLeaderName}</td>
+                        <td>${employee.nameLead}</td>
                         <td>${employee.startDate}</td>
                         <td>${employee.status}</td>
                         <td><i onclick="updateEmployee(${employee.employeeId})" class="fa-regular fa-pen-to-square"

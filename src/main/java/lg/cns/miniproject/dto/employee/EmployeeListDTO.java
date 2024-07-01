@@ -17,5 +17,5 @@ public class EmployeeListDTO {
     private String status;
     private String teamName;
     private String projectName;
-    private String projectLeaderName;
+    private String nameLead;
 }

@@ -31,31 +31,25 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<EmployeeListDTO> getEmployeeList() {
         List<Employee> employeeList = employeeRepository.findAll();
-        List<EmployeeListDTO> employeeListDTOList = new ArrayList<>();
-        if (employeeList != null && employeeList.size() > 0) {
-            for (Employee employee : employeeList) {
-                EmployeeListDTO employeeListDTO = new EmployeeListDTO();
-                employeeListDTO.setEmployeeId(employee.getEmployeeId());
-                employeeListDTO.setEmployeeName(employee.getEmployeeName());
-                employeeListDTO.setGender(employee.getGender());
-                employeeListDTO.setDob(employee.getDob());
-                employeeListDTO.setPhoneNumber(employee.getPhoneNumber());
-                employeeListDTO.setEmail(employee.getEmail());
-                employeeListDTO.setAddress(employee.getAddress());
 
+        if (employeeList != null && employeeList.size() > 0) {
+
+            List<EmployeeListDTO> employeeListDTOList = employeeList.stream().map(employee -> {
+                EmployeeListDTO employeeListDTO = (EmployeeListDTO) mapper.mapToDTO(employee, EmployeeListDTO.class);
                 Team team = employee.getTeam();
                 Project project = employee.getProject();
 
                 employeeListDTO.setTeamName(team != null ? team.getTeamName() : "");
-                employeeListDTO.setProjectName(project != null ? project.getProjectName() : "");
-                employeeListDTO.setProjectLeaderName(employee.getNameLead());
 
-                employeeListDTO.setStartDate(employee.getStartDate());
-                employeeListDTO.setStatus(employee.getStatus());
-                employeeListDTOList.add(employeeListDTO);
-            }
+                employeeListDTO.setProjectName(project != null ? project.getProjectName() : "");
+
+                employeeListDTO.setNameLead(employee.getNameLead());
+                return employeeListDTO;
+            }).toList();
+
+            return employeeListDTOList;
         }
-        return employeeListDTOList;
+        return null;
     }
 
     @Override
@@ -64,31 +58,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         List<Employee> employeeList = employeeRepository.getEmployeeListByPaging(offset, size);
 
-        List<EmployeeListDTO> employeeListDTOList = new ArrayList<>();
         if (employeeList != null && employeeList.size() > 0) {
-            for (Employee employee : employeeList) {
-                EmployeeListDTO employeeListDTO = new EmployeeListDTO();
-                employeeListDTO.setEmployeeId(employee.getEmployeeId());
-                employeeListDTO.setEmployeeName(employee.getEmployeeName());
-                employeeListDTO.setGender(employee.getGender());
-                employeeListDTO.setDob(employee.getDob());
-                employeeListDTO.setPhoneNumber(employee.getPhoneNumber());
-                employeeListDTO.setEmail(employee.getEmail());
-                employeeListDTO.setAddress(employee.getAddress());
-
+            List<EmployeeListDTO> employeeListDTOList = employeeList.stream().map(employee -> {
+                EmployeeListDTO employeeListDTO = (EmployeeListDTO) mapper.mapToDTO(employee, EmployeeListDTO.class);
                 Team team = employee.getTeam();
                 Project project = employee.getProject();
 
                 employeeListDTO.setTeamName(team != null ? team.getTeamName() : "");
-                employeeListDTO.setProjectName(project != null ? project.getProjectName() : "");
-                employeeListDTO.setProjectLeaderName(employee.getNameLead());
 
-                employeeListDTO.setStartDate(employee.getStartDate());
-                employeeListDTO.setStatus(employee.getStatus());
-                employeeListDTOList.add(employeeListDTO);
-            }
+                employeeListDTO.setProjectName(project != null ? project.getProjectName() : "");
+
+                employeeListDTO.setNameLead(employee.getNameLead());
+                return employeeListDTO;
+            }).toList();
+            return employeeListDTOList;
         }
-        return employeeListDTOList;
+        return null;
     }
 
     @Override
@@ -96,56 +81,28 @@ public class EmployeeServiceImpl implements EmployeeService {
         int offset = (page - 1) * size;
 
         List<Employee> employeeList = employeeRepository.filterEmployeeList(filterEmployee, offset, size);
-        List<EmployeeListDTO> employeeListDTOList = new ArrayList<>();
+
         if (employeeList != null && employeeList.size() > 0) {
-            for (Employee employee : employeeList) {
-                EmployeeListDTO employeeListDTO = new EmployeeListDTO();
-                employeeListDTO.setEmployeeId(employee.getEmployeeId());
-                employeeListDTO.setEmployeeName(employee.getEmployeeName());
-                employeeListDTO.setGender(employee.getGender());
-                employeeListDTO.setDob(employee.getDob());
-                employeeListDTO.setPhoneNumber(employee.getPhoneNumber());
-                employeeListDTO.setEmail(employee.getEmail());
-                employeeListDTO.setAddress(employee.getAddress());
+            List<EmployeeListDTO> employeeListDTOList = employeeList.stream().map(employee -> {
+                EmployeeListDTO employeeListDTO = (EmployeeListDTO) mapper.mapToDTO(employee, EmployeeListDTO.class);
 
                 Team team = employee.getTeam();
                 Project project = employee.getProject();
 
-                employeeListDTO.setTeamName(team.getTeamName());
-                employeeListDTO.setProjectName(project.getProjectName());
-                employeeListDTO.setProjectLeaderName(employee.getNameLead());
+                employeeListDTO.setTeamName(team != null ? team.getTeamName() : "");
+                employeeListDTO.setProjectName(project != null ? project.getProjectName() : "");
+                employeeListDTO.setNameLead(employee.getNameLead());
 
-                employeeListDTO.setStartDate(employee.getStartDate());
-                employeeListDTO.setStatus(employee.getStatus());
-                employeeListDTOList.add(employeeListDTO);
-            }
+                return employeeListDTO;
+            }).toList();
+            return employeeListDTOList;
         }
-        return employeeListDTOList;
+        return null;
     }
 
     @Override
     public int addEmployee(AddEmployeeDTO addEmployeeDTO) {
-        if (!validation.validateNameFormat(addEmployeeDTO.getName())) {
-            throw new NameFormatInvalidException("Name is invalid");
-        }
-        if (!validation.validatePhoneFormat(addEmployeeDTO.getPhoneNumber())) {
-            throw new PhoneFormatInvalidException("Phone is invalid");
-        }
-        if (validation.checkPhoneExistForAddEmployee(addEmployeeDTO.getPhoneNumber(), getEmployeeList())) {
-            throw new PhoneExistException("Phone Number is existed");
-        }
-        if (validation.validateStartDate(addEmployeeDTO.getStartDate())) {
-            throw new InvalidDateException("Invalid Date");
-        }
-        if (validation.validateBirthday(addEmployeeDTO.getDob())) {
-            throw new InvalidDateException("Invalid Date");
-        }
-        if (!validation.validateEmailFormat(addEmployeeDTO.getEmail())) {
-            throw new InvalidEmailFormatException("Invalid Email Format");
-        }
-        if (validation.checkEmailExistForAddEmployee(addEmployeeDTO.getEmail(), getEmployeeList())) {
-            throw new EmailExistException("Email is existed");
-        }
+        validation.validateDataForAddEmployee(addEmployeeDTO, getEmployeeList());
 
         Employee employee = (Employee) mapper.mapToEntity(addEmployeeDTO, Employee.class);
         employee.setStatus(addEmployeeDTO.getStatus() ? "Active" : "Inactive");
@@ -174,27 +131,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public int updateEmployee(UpdateEmployeeDTO updateEmployeeDTO) {
         List<EmployeeInfomationDTO> employeeList = employeeRepository.getAllEmployeeExceptById(updateEmployeeDTO.getEmployeeId());
 
-        if (!validation.validateNameFormat(updateEmployeeDTO.getName())) {
-            throw new NameFormatInvalidException("Name is invalid");
-        }
-        if (!validation.validatePhoneFormat(updateEmployeeDTO.getPhoneNumber())) {
-            throw new PhoneFormatInvalidException("Phone is invalid");
-        }
-        if (validation.checkPhoneExistForUpdateEmployee(updateEmployeeDTO.getPhoneNumber(), employeeList)) {
-            throw new PhoneExistException("Phone Number is existed");
-        }
-        if (validation.validateStartDate(updateEmployeeDTO.getStartDate())) {
-            throw new InvalidDateException("Invalid Date");
-        }
-        if (validation.validateBirthday(updateEmployeeDTO.getDob())) {
-            throw new InvalidDateException("Invalid Date");
-        }
-        if (!validation.validateEmailFormat(updateEmployeeDTO.getEmail())) {
-            throw new InvalidEmailFormatException("Invalid Email Format");
-        }
-        if (validation.checkEmailExistForUpdateEmployee(updateEmployeeDTO.getEmail(), employeeList)) {
-            throw new EmailExistException("Email is existed");
-        }
+        validation.validateDataForUpdateEmployee(updateEmployeeDTO, employeeList);
 
         EmployeeInfomationDTO employeeInfomationDTO = (EmployeeInfomationDTO) mapper.mapToEntity(updateEmployeeDTO, EmployeeInfomationDTO.class);
         employeeInfomationDTO.setProjectId(updateEmployeeDTO.getProjectSelect());
