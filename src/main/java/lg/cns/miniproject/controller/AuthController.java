@@ -56,24 +56,6 @@ public class AuthController {
 //        return "login";
 //    }
 
-//    @PostMapping("/login")
-//    public String login(@ModelAttribute("loginDTO") LoginDTO loginDTO, Model model, RedirectAttributes redirectAttributes) {
-//        try {
-//            // Xác thực người dùng
-//            Authentication auth = authenticationManager.authenticate(
-//                    new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
-//            SecurityContextHolder.getContext().setAuthentication(auth);
-//
-//            // Xác thực thành công, thêm thông điệp vào RedirectAttributes
-//            redirectAttributes.addFlashAttribute("noti", "Congratulations!");
-//            redirectAttributes.addFlashAttribute("message", "Login successful.");
-//            return "redirect:/login"; // Redirect để hiển thị thông điệp
-//        } catch (AuthenticationException e) {
-//            model.addAttribute("errorMessage", "Invalid username or password");
-//            return "login";
-//        }
-//    }
-
     @GetMapping("/register")
     public String showRegisterPage() {
         return "register";
