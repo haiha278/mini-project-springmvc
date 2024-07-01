@@ -10,7 +10,7 @@ function showPopup() {
         popupMessage.innerText = createStatus == "true" ? "Create employee successfully!" : "Error! Can not create the employee";
     }
     if (updateStatus) {
-        popupMessage.innerText = updateStatus == "true" ? "Update employee successfully!" : "Error! Can not update the employee";
+        popupMessage.innerText = updateStatus == "true" ? "The employee was updated!" : "Error! Can not update the employee";
     }
     popup.style.display = "block";
 }

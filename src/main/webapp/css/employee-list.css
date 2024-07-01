@@ -214,6 +214,35 @@ tr.selected {
     gap: 10px;
 }
 
-.page-list a.active{
+.page-list a.active {
     background-color: #caeaff;
+}
+
+@media (max-width: 1200px) {
+    /*.container {*/
+    /*    max-width: 1200px;*/
+    /*}*/
+
+    .filter-box {
+        border: 2px solid black;
+        position: relative;
+        margin: 0 50px;
+        margin-top: 70px;
+    }
+
+    .filter-input {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        column-gap: 20px;
+        row-gap: 30px;
+        /*margin: auto;*/
+        margin-top: 50px;
+    }
+
+    select {
+        /*width: auto;*/
+        font-size: 16px;
+        padding: 5px;
+    }
+
 }

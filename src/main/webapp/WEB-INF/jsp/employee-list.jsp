@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="container">
-    <form action="/employee-list" method="post" modelAttribute="filterEmployee">
+    <form id="filter-form" action="/employee-list" method="post" modelAttribute="filterEmployee">
         <input type="hidden" name="page" id="page" value="${currentPage}">
         <input type="hidden" name="size" id="size" value="${size}">
 

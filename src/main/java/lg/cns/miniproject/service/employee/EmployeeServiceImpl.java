@@ -42,7 +42,6 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employeeListDTO.setPhoneNumber(employee.getPhoneNumber());
                 employeeListDTO.setEmail(employee.getEmail());
                 employeeListDTO.setAddress(employee.getAddress());
-//                employeeListDTO = (EmployeeListDTO) mapper.mapToDTO(employee, EmployeeListDTO.class);
 
                 Team team = employee.getTeam();
                 Project project = employee.getProject();
@@ -76,7 +75,6 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employeeListDTO.setPhoneNumber(employee.getPhoneNumber());
                 employeeListDTO.setEmail(employee.getEmail());
                 employeeListDTO.setAddress(employee.getAddress());
-//                employeeListDTO = (EmployeeListDTO) mapper.mapToDTO(employee, EmployeeListDTO.class);
 
                 Team team = employee.getTeam();
                 Project project = employee.getProject();
