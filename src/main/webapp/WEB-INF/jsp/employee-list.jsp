@@ -166,9 +166,6 @@
     </div>
     <div class="pagination">
         <select id="page-size" name="size" onchange="updatePageSize()">
-            <%--            <option value="5">5</option>--%>
-            <%--            <option value="10">10</option>--%>
-            <%--            <option value="20">20</option>--%>
             <option value="5" <c:if test="${size == 5}">selected</c:if>>5</option>
             <option value="10" <c:if test="${size == 10}">selected</c:if>>10</option>
             <option value="20" <c:if test="${size == 20}">selected</c:if>>20</option>
